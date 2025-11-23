@@ -3,28 +3,42 @@ package com.example.petmatch
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.petmatch.ui.theme.PetMatchTheme
+import com.example.petmatch.navigation.NavGraph
+import com.example.petmatch.ui.feature.login.LoginScreen
+import com.example.petmatch.ui.theme.PetMatchTheme // Certifique-se que o nome do tema está certo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            PetMatchTheme {
-
+            MaterialTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    NavGraph()
+                }
             }
         }
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    PetMatchTheme {
-
+fun LoginScreenPreview() {
+    // Aqui a gente cria uma visualização "falsa" só para ver o layout
+    // O ViewModel vai tentar iniciar, então o preview pode reclamar de rede,
+    // mas o desenho deve aparecer.
+    MaterialTheme {
+        LoginScreen(
+            onNavigateToHome = {},
+            onNavigateToRegister = {}
+        )
     }
 }

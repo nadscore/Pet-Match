@@ -16,6 +16,6 @@ data class PetEntity(
     @SerialName("descricao")
     val descricao: String,
 
-    @SerialName("image_url")
-    val image_url: String
+    @SerialName("imageUrl")
+    val imageUrl: String
 )
