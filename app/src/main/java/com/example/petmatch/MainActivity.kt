@@ -38,7 +38,8 @@ fun LoginScreenPreview() {
     MaterialTheme {
         LoginScreen(
             onNavigateToHome = {},
-            onNavigateToRegister = {}
+            onNavigateToRegister = {},
+            onNavigateToForgotPassword = {}
         )
     }
 }
