@@ -1,25 +1,22 @@
 package com.example.petmatch.navigation
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.example.petmatch.ui.feature.forgotpassword.NewPasswordScreen
 import com.example.petmatch.ui.feature.forgotpassword.ForgotPasswordScreen
 import com.example.petmatch.ui.feature.forgotpassword.VerificationCodeScreen
+import com.example.petmatch.ui.feature.home.HomeScreen
 import com.example.petmatch.ui.feature.login.LoginScreen
 import com.example.petmatch.ui.feature.register.RegisterScreen
+import com.example.petmatch.ui.feature.petregister.PetRegisterScreen
 import kotlinx.serialization.Serializable
 
 
 @Serializable object LoginRoute
 @Serializable object RegisterRoute
+@Serializable object PetRegisterRoute
 @Serializable object ForgotPasswordRoute
 @Serializable object VerificationCodeRoute
 @Serializable object NewPasswordRoute
@@ -35,9 +32,18 @@ fun NavGraph() {
     ) {
         composable<LoginRoute> {
             LoginScreen(
-                onNavigateToHome = {
-                    navController.navigate(HomeRoute(userId = 1)) {
-                        popUpTo<LoginRoute> { inclusive = true }
+                onNavigateToHome = { userEmail ->
+                    //LÓGICA DO ADMIN:
+                    if (userEmail.equals("nadine.cabral336@gmail.com", ignoreCase = true)) {
+                        // Se for Nadine (admin), vai para o Cadastro de Pets
+                        navController.navigate(PetRegisterRoute) {
+                            popUpTo<LoginRoute> { inclusive = true }
+                        }
+                    } else {
+                        // Se for qualquer outra pessoa, vai para a Home (Swipe)
+                        navController.navigate(HomeRoute(userId = 1)) {
+                            popUpTo<LoginRoute> { inclusive = true }
+                        }
                     }
                 },
                 onNavigateToRegister = {
@@ -45,6 +51,17 @@ fun NavGraph() {
                 },
                 onNavigateToForgotPassword = {
                     navController.navigate(ForgotPasswordRoute)
+                }
+            )
+        }
+
+        // ROTA DO ADMIN
+        composable<PetRegisterRoute> {
+            PetRegisterScreen(
+                onLogout = {
+                    navController.navigate(LoginRoute) {
+                        popUpTo<PetRegisterRoute> { inclusive = true }
+                    }
                 }
             )
         }
@@ -87,12 +104,8 @@ fun NavGraph() {
             )
         }
 
-        composable<HomeRoute> { backStackEntry ->
-            val args = backStackEntry.toRoute<HomeRoute>()
-
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = "Bem-vindo à Home! ID do Usuário: ${args.userId}")
-            }
+        composable<HomeRoute> {
+            HomeScreen()
         }
     }
 }

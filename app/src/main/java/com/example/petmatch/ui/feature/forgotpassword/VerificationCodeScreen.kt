@@ -77,6 +77,7 @@ fun VerificationCodeScreen(
             onValueChange = { code = it },
             label = "Código de Verificação",
             keyboardType = KeyboardType.Number,
+            helperText = "Informe o Código recebido por E-mail",
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 

@@ -26,6 +26,7 @@ fun PetMatchInput(
     isPassword: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    helperText: String? = null,
     modifier: Modifier = Modifier
 ) {
     var senhaVisivel by remember { mutableStateOf(false) }
@@ -66,7 +67,7 @@ fun PetMatchInput(
             } else null
         )
         Text(
-            text = "Informe seu $label",
+            text = helperText ?: "Informe seu $label",
             fontSize = 12.sp,
             color = Color.Gray,
             modifier = Modifier.padding(start = 4.dp, top = 4.dp)

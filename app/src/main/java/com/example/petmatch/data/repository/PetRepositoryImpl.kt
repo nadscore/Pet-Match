@@ -4,6 +4,8 @@ import com.example.petmatch.data.api.RetrofitClient
 import com.example.petmatch.model.Pet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 class PetRepositoryImpl : PetRepository {
     private val api = RetrofitClient.service
@@ -21,13 +23,35 @@ class PetRepositoryImpl : PetRepository {
                         nome = entity.nome,
                         idade = entity.idade,
                         descricao = entity.descricao,
-                        imageUrl = entity.imageUrl
+                        image_uri = entity.image_uri
                     )
                 }
 
                 Result.success(pets)
             } else {
                 Result.failure(Exception("Erro ao buscar pets: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(Exception("Erro de conexão: ${e.message}"))
+        }
+    }
+
+    override suspend fun savePet(nome: String, idade: Int, descricao: String, image_uri: String): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            val json = buildJsonObject {
+                put("nome", nome)
+                put("idade", idade)
+                put("descricao", descricao)
+                put("image_uri", image_uri)
+            }
+
+            val response = api.insertPet(json)
+
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Erro ao salvar pet: ${response.code()}"))
             }
         } catch (e: Exception) {
             e.printStackTrace()

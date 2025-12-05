@@ -42,16 +42,12 @@ class RegisterViewModel : ViewModel() {
 
         viewModelScope.launch {
             _uiState.value = RegisterUiState(isLoading = true)
+            val result = repository.register(nome, cpfLimpo, email, senha)
 
-            try {
-                // TODO: Futuramente chamaremos repository.register(..., cpfLimpo, ...)
-
-                delay(2000) // Simulando o tempo de rede
-
+            result.onSuccess {
                 _uiState.value = RegisterUiState(registerSuccess = true)
-
-            } catch (e: Exception) {
-                _uiState.value = RegisterUiState(errorMessage = "Erro ao registrar: ${e.message}")
+            }.onFailure { exception ->
+                _uiState.value = RegisterUiState(errorMessage = "Erro: ${exception.message}")
             }
         }
     }

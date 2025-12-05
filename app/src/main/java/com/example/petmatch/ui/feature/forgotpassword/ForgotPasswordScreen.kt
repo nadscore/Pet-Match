@@ -72,6 +72,7 @@ fun ForgotPasswordScreen(
             onValueChange = { email = it },
             label = "E-mail",
             keyboardType = KeyboardType.Email,
+            helperText = "Informe o Email associado a conta",
             modifier = Modifier.padding(horizontal = 16.dp)
         )
 

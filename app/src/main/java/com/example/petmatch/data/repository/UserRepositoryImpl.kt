@@ -42,4 +42,26 @@ class UserRepositoryImpl : UserRepository {
             Result.failure(Exception("Erro de conexão: ${e.message}"))
         }
     }
+
+    override suspend fun register(nome: String, cpf: String, email: String, senha: String): Result<Unit> = withContext(Dispatchers.IO) {
+        try {
+            val userMap = mapOf(
+                "nome" to nome,
+                "cpf" to cpf,
+                "email" to email,
+                "senha" to senha
+            )
+
+            val response = api.register(userMap)
+
+            if (response.isSuccessful) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Erro ao criar conta: ${response.code()}"))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(Exception("Erro de conexão: ${e.message}"))
+        }
+    }
 }

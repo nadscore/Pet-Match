@@ -127,6 +127,7 @@ fun RegisterScreen(
             onValueChange = { senha = it },
             label = "Senha",
             isPassword = true,
+            helperText = "Informe sua Senha",
             modifier = Modifier.padding(horizontal = 48.dp)
         )
 

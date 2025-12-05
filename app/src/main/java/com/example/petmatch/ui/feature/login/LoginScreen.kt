@@ -23,7 +23,7 @@ import com.example.petmatch.ui.components.PetMatchInput
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = viewModel(),
-    onNavigateToHome: () -> Unit,
+    onNavigateToHome: (String) -> Unit,
     onNavigateToRegister: () -> Unit,
     onNavigateToForgotPassword: () -> Unit
 ) {
@@ -38,7 +38,8 @@ fun LoginScreen(
 
     LaunchedEffect(uiState.loginSuccess) {
         if (uiState.loginSuccess) {
-            onNavigateToHome()
+            val userEmail = uiState.usuario?.email ?: ""
+            onNavigateToHome(userEmail)
         }
     }
 
@@ -104,6 +105,7 @@ fun LoginScreen(
             onValueChange = { senha = it },
             label = "Senha",
             isPassword = true,
+            helperText = "Informa sua Senha",
             modifier = Modifier.padding(horizontal = 48.dp)
         )
 

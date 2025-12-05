@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.petmatch.navigation.NavGraph
 import com.example.petmatch.ui.feature.login.LoginScreen
-import com.example.petmatch.ui.theme.PetMatchTheme // Certifique-se que o nome do tema está certo
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

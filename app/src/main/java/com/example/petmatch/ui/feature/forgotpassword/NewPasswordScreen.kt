@@ -66,6 +66,7 @@ fun NewPasswordScreen(
             value = senha,
             onValueChange = { senha = it },
             label = "Nova Senha",
+            helperText = "Digite uma Nova Senha",
             isPassword = true,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
@@ -77,6 +78,7 @@ fun NewPasswordScreen(
             value = confirmarSenha,
             onValueChange = { confirmarSenha = it },
             label = "Confirme sua Senha",
+            helperText = "Confirme a Nova Senha",
             isPassword = true,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
